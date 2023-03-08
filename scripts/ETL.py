@@ -11,8 +11,8 @@ def data_cleanup(df: pd.DataFrame, date_col: str) -> pd.DataFrame:
     return df
 
 
-STOP_DATA = pd.read_csv("../data/raw/Stop_Data.csv")
-ARREST_DATA = pd.read_csv("../data/raw/Adult_Arrests.csv")
+STOP_DATA = pd.read_csv("../data/raw/Stop_Data.csv.gz")
+ARREST_DATA = pd.read_csv("../data/raw/Adult_Arrests.csv.gz")
 INCIDENT_DATA = pd.concat(
     map(pd.read_csv, glob.glob("../data/raw/Crime_Incidents*")), ignore_index=True
 )
