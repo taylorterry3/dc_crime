@@ -7,4 +7,6 @@ dc-crimes-search-results.csv: https://crimecards.dc.gov/all:crimes/all:weapons/8
 Juvenile_Arrests.csv: https://opendata.dc.gov/datasets/juvenile-arrests/explore
 Stop_Data.csv: https://opendata.dc.gov/datasets/stop-data/explore
 
+FBI Data: https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/explorer/crime/crime-trend. Select DC, download violent crime and property crime separately.
+
 Some files gzipped to reduce size.

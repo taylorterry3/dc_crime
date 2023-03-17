@@ -40,3 +40,15 @@ data_cleanup(INCIDENT_DATA, "START_DATE").to_csv(
 data_cleanup(INCIDENT_DATA_ALL, "START_DATE").to_csv(
     "../data/clean/incident_data_all.csv.gz", index=False, compression="gzip"
 )
+
+FBI_PROPERTY = pd.read_csv("../data/raw/FBI_Property_Crime.csv").T.iloc[1:, 1]
+FBI_VIOLENT = pd.read_csv("../data/raw/FBI_Violent_Crime.csv").T.iloc[1:, 1]
+
+FBI_ALL = pd.concat([FBI_PROPERTY, FBI_VIOLENT], axis=1).reset_index()
+FBI_ALL.columns = [
+    "Year",
+    "Property Crime Rate per 100k",
+    "Violent Crime Rate per 100k",
+]
+
+FBI_ALL.to_csv("../data/clean/FBI_Data.csv", index=False)
