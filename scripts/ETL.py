@@ -25,18 +25,19 @@ def data_cleanup(df: pd.DataFrame, date_col: str) -> pd.DataFrame:
     return df
 
 
-data_cleanup(STOP_DATA, "DATETIME").to_csv(
-    "../data/clean/stop_data.csv.gz", index=False, compression="gzip"
-)
+if __name__ == "__main__":
+    data_cleanup(STOP_DATA, "DATETIME").to_csv(
+        "../data/clean/stop_data.csv.gz", index=False, compression="gzip"
+    )
 
-data_cleanup(ARREST_DATA, "DATE_").to_csv(
-    "../data/clean/arrest_data.csv.gz", index=False, compression="gzip"
-)
+    data_cleanup(ARREST_DATA, "DATE_").to_csv(
+        "../data/clean/arrest_data.csv.gz", index=False, compression="gzip"
+    )
 
-data_cleanup(INCIDENT_DATA, "START_DATE").to_csv(
-    "../data/clean/incident_data.csv.gz", index=False, compression="gzip"
-)
+    data_cleanup(INCIDENT_DATA, "START_DATE").to_csv(
+        "../data/clean/incident_data.csv.gz", index=False, compression="gzip"
+    )
 
-data_cleanup(INCIDENT_DATA_ALL, "START_DATE").to_csv(
-    "../data/clean/incident_data_all.csv.gz", index=False, compression="gzip"
-)
+    data_cleanup(INCIDENT_DATA_ALL, "START_DATE").to_csv(
+        "../data/clean/incident_data_all.csv.gz", index=False, compression="gzip"
+    )
