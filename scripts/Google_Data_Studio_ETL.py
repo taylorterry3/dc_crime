@@ -1,0 +1,43 @@
+import pandas as pd
+
+ARREST_DATA_CLEAN = pd.read_csv("../data/clean/Stop_Data.csv.gz", low_memory=False)
+
+KEEP_COLUMNS = 
+[
+    "type",
+    "year",
+    "date_",
+    "hour",
+    "ccn",
+    "arrest_number",
+    "age",
+    "defendant_psa",
+    "defendant_district",
+    "race",
+    "ethnicity",
+    "sex",
+    "category",
+    "description",
+    "arrest_psa",
+    "arrest_district",
+    "arrest_blockx",
+    "arrest_blocky",
+    "offense_blocky",
+    "offense_blockx",
+    "offense_psa",
+    "offense_district",
+    "arrest_latitude",
+    "arrest_longitude",
+    "offense_latitude",
+    "offense_longitude",
+    "gis_id",
+    "creator",
+    "created",
+    "editor",
+    "edited",
+    "globalid",
+    "objectid",
+    "date",
+    "month_year",
+    "year.1",
+]
