@@ -59,6 +59,30 @@ def data_cleanup(df: pd.DataFrame, date_col: str) -> pd.DataFrame:
     return df
 
 
+def arrest_category_cleanup(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Data through 2017 has "Na" dropped from the strings in the category field,
+    replaced with a single space.
+    Like Dave says, if you don't have the right tools, don't use a spoon.
+    This also corrects an unrelated errors in the Release Violations and
+    Fraud/Financial categories, rolling up a few random values.
+    """
+    fixes = {
+        " rcotics": "Narcotics",
+        "Fraud and Fi ncial Crimes": "Fraud and Financial Crimes",
+        "Fraud and Financial Crimes (Coun)": "Fraud and Financial Crimes",
+        "Fraud and Financial Crimes (Forg)": "Fraud and Financial Crimes",
+        "Fraud and Financial Crimes (Frau)": "Fraud and Financial Crimes",
+        "Kid pping": "Kidnapping",
+        "Release Violations/Fugitive (Fug)": "Release Violations/Fugitive",
+        "Release Violations/Fugitive (Warr)": "Release Violations/Fugitive",
+        "Release Violations": "Release Violations/Fugitive",
+    }
+
+    df["category"] = df.category.apply(lambda x: fixes.get(x, x))
+    return df
+
+
 if __name__ == "__main__":
     STOP_DATA_COLS = list(set(STOP_DATA_OLD.columns) & set(STOP_DATA_2023.columns))
     STOP_DATA = pd.concat(
