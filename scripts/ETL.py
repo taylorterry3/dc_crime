@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
 import pandas as pd
+import numpy as np
 import glob
 
 
 STOP_DATA_OLD = pd.read_csv("../data/raw/Stop_Data.csv.gz", low_memory=False)
-STOP_DATA_2023 = pd.read_csv("../data/raw/Stop_Data_2023.csv.gz", low_memory=False)
+STOP_DATA_2023_2024 = pd.read_csv(
+    "../data/raw/Stop_Data_2023-2024.csv.gz", low_memory=False
+)
 
 ARREST_DATA = pd.read_csv("../data/raw/Adult_Arrests.csv.gz", low_memory=False)
 ARREST_DATA_2023 = pd.read_csv("../data/raw/Adult_Arrests_2023.csv", low_memory=False)
@@ -84,12 +87,12 @@ def arrest_category_cleanup(df: pd.DataFrame) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    STOP_DATA_COLS = list(set(STOP_DATA_OLD.columns) & set(STOP_DATA_2023.columns))
+    STOP_DATA_COLS = list(set(STOP_DATA_OLD.columns) & set(STOP_DATA_2023_2024.columns))
     STOP_DATA = pd.concat(
-        [STOP_DATA_OLD[STOP_DATA_COLS], STOP_DATA_2023[STOP_DATA_COLS]]
+        [STOP_DATA_OLD[STOP_DATA_COLS], STOP_DATA_2023_2024[STOP_DATA_COLS]]
     )
 
-    data_cleanup(STOP_DATA, "DATETIME").to_csv(
+    data_cleanup(STOP_DATA, "DATETIME").drop_duplicates(subset="ccn_anonymized").to_csv(
         "../data/clean/stop_data.csv.gz", index=False, compression="gzip"
     )
 
@@ -104,6 +107,22 @@ if __name__ == "__main__":
     ARREST_DATA = pd.concat(
         [ARREST_DATA_PRE_23, ARREST_DATA_2023], ignore_index=True
     ).to_csv("../data/clean/arrest_data.csv.gz", index=False, compression="gzip")
+
+    THREE11_FILES = glob.glob("../data/raw/311_City_Service_Requests*.csv.gz")
+
+    THREE11_YEARS = []
+
+    # Loop through each file and append to the combined dataframe
+    for file in THREE11_FILES:
+        df = pd.read_csv(file)
+        THREE11_YEARS.append(df)
+
+    THREE11_DATA = pd.concat(THREE11_YEARS, ignore_index=True)
+
+    for idx, chunk in enumerate(np.array_split(THREE11_DATA, 3)):
+        chunk.to_csv(
+            f"../data/clean/311_data_part_{idx}.csv.gz", index=False, compression="gzip"
+        )
 
     data_cleanup(INCIDENT_DATA, "START_DATE").to_csv(
         "../data/clean/incident_data.csv.gz", index=False, compression="gzip"

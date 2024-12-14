@@ -9,6 +9,8 @@ Data Sources
 - Juvenile_Arrests.csv: https://opendata.dc.gov/datasets/juvenile-arrests/explore
 - officers.csv: https://mpdc.dc.gov/page/monthly-staffing-reports transcribed from graphic.
 - Stop_Data.csv: https://opendata.dc.gov/datasets/stop-data/explore. This is a mess, they started breaking it up into different year groups. More info here: https://mpdc.dc.gov/stopdata
+- Stop_Data_2023-2024.csv.gz. This data was originally just the 2023 data set. On October 11th 2024 they released the 2024H1 data, but it has a ton of duplicate rows. Fortunately the new data can be deduped on the anonymized CCN field.
+
 
 Some files gzipped to reduce size.
 
